@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+details>summary {
+    list-style: none;
+}
+
+details>summary::marker,
+details>summary::-webkit-details-marker {
+    display: none;
+}
+
+#initial>div,
+#output>div {
+    @apply relative overflow-auto;
+}
+
+#output div,
+#initial div {
+    @apply whitespace-pre-wrap mt-[-5px];
+}
+
+#output div div,
+#initial div div {
+    @apply whitespace-normal mt-[-5px];
+}
+
+table.dataframe {
+    @apply text-sm text-gray-600 w-full;
+}
+
+table.dataframe thead {
+    @apply bg-stone-800 text-white;
+}
+
+table.dataframe thead tr th {
+    @apply text-center;
+}
+
+table.dataframe thead tr th:first-child {
+    @apply bg-stone-500;
+}
+
+table.dataframe tbody tr th:first-child {
+    @apply bg-stone-300 border-b border-bgray-200;
+}
+
+table.dataframe thead th {
+    @apply py-2 px-4;
+}
+
+table.dataframe tbody tr {
+    @apply border-b bg-white text-center;
+}
+
+table.dataframe tbody th {
+    @apply py-2 px-4;
+}

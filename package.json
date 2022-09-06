@@ -1,0 +1,20 @@
+{
+  "name": "pandas-pyscript",
+  "version": "1.0.0",
+  "description": "Pandas PyScript",
+  "main": "webpack.config.js",
+  "scripts": {
+    "build": "webpack --mode production"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tailwindcss": "^3.1.8",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "alpinejs": "^3.10.3"
+  }
+}

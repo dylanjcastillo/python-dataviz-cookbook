@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Primary Meta Tags -->
+    <title>Python Data Vizualization Cookbok</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="title" content="Python Data Vizualization Cookbok">
+    <meta name="description"
+        content="A free and interactive cheat sheet with code samples from pandas, Python's most popular data analysis library.">
+    <meta name="keywords" content="pandas cheatsheet, pandas cheat sheet, pandas">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://pandas.dylancastillo.co/">
+    <meta property="og:title" content="Python Data Vizualization Cookbok">
+    <meta property="og:description"
+        content="A free and interactive cheat sheet with code samples from pandas, Python's most popular data analysis library.">
+    <meta property="og:image" content="./assets/images/meta-img.jpg">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://pandas.dylancastillo.co/">
+    <meta property="twitter:title" content="Pandas Cheat Sheet">
+    <meta property="twitter:description"
+        content="A free and interactive cheat sheet with code samples from pandas, Python's most popular data analysis library.">
+    <meta property="twitter:image" content="./assets/images/meta-img.jpg">
+    <meta name="twitter:creator" content="@_dylancastillo" />
+
+    <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
+    <link rel="stylesheet" href="./assets/built/style.css" />
+    <link rel="stylesheet" href="./assets/built/pyscript.css" />
+    <script defer src="./assets/built/pyscript.js"></script>
+
+    <py-env>
+        - matplotlib
+        - numpy
+        - pandas
+    </py-env>
+</head>
+
+<body body class="min-h-screen bg-rose-50">
+    <h2 class="text-bgray-800 text-center font-bold text-6xl pt-6">👨‍🍳 📙 📊</h2>
+    <h1 class="text-bgray-800 text-center font-bold text-4xl pb-6 pt-2">Python Data Viz Cookbook</h1>
+    <!-- <div class="flex flex-row flex-wrap gap-4 justify-center">
+        <div>
+            <select id="category"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                <option selected="">Choose a category</option>
+                <option value="subset_rows">Subset rows</option>
+                <option value="subset_cols">Subset columns</option>
+                <option value="subset_rows_cols">Subset rows & columns</option>
+                <option value="reshape">Reshape data</option>
+                <option value="manipulate">Manipulate data</option>
+                <option value="summarize">Summarize data</option>
+                <option value="aggregations">Aggregate data</option>
+                <option value="join_df">Join DataFrames</option>
+            </select>
+        </div>
+        <div>
+            <select id="operation"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
+                <option selected="">Choose an operation</option>
+            </select>
+        </div>
+    </div> -->
+    <py-script src="./scripts/script.py" output="initial-df-output"></py-script>
+    <div class="flex flex-row justify-center gap-6 p-10 flex-wrap">
+        <div class="w-[400px] md:w-[600px]" id="container-code">
+            <div class="p-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
+                REPL
+            </div>
+            <div class="bg-white rounded-b-xl border-x bg-border-gray-200 p-4 overflow-x-auto" id="container-repl">
+                <py-repl std-out="output" id="output-repl">df.head()</py-repl>
+            </div>
+        </div>
+        <div class="w-[400px] md:w-[600px] " id="container-results" x-data="{ tab: 'graph' }">
+            <div class="p-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
+                Results
+            </div>
+            <ul class="flex text-sm font-medium text-stone-400 bg-stone-800">
+                <li class="w-full">
+                    <a href="#" class="inline-flex p-2 w-full group" aria-current="page" :class="{'active text-white bg-rose-600 hover:text-stone-200': tab === 'initial-df', 
+                             'hover:border-stone-300 hover:text-stone-300': tab !== 'initial-df' }"
+                        @click.prevent="tab = 'initial-df'">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            class="w-5 h-5 mr-1">
+                            <path fill-rule="evenodd"
+                                d="M.99 5.24A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25l.01 9.5A2.25 2.25 0 0116.76 17H3.26A2.267 2.267 0 011 14.74l-.01-9.5zm8.26 9.52v-.625a.75.75 0 00-.75-.75H3.25a.75.75 0 00-.75.75v.615c0 .414.336.75.75.75h5.373a.75.75 0 00.627-.74zm1.5 0a.75.75 0 00.627.74h5.373a.75.75 0 00.75-.75v-.615a.75.75 0 00-.75-.75H11.5a.75.75 0 00-.75.75v.625zm6.75-3.63v-.625a.75.75 0 00-.75-.75H11.5a.75.75 0 00-.75.75v.625c0 .414.336.75.75.75h5.25a.75.75 0 00.75-.75zm-8.25 0v-.625a.75.75 0 00-.75-.75H3.25a.75.75 0 00-.75.75v.625c0 .414.336.75.75.75H8.5a.75.75 0 00.75-.75zM17.5 7.5v-.625a.75.75 0 00-.75-.75H11.5a.75.75 0 00-.75.75V7.5c0 .414.336.75.75.75h5.25a.75.75 0 00.75-.75zm-8.25 0v-.625a.75.75 0 00-.75-.75H3.25a.75.75 0 00-.75.75V7.5c0 .414.336.75.75.75H8.5a.75.75 0 00.75-.75z"
+                                clip-rule="evenodd" />
+                        </svg>Initial DataFrame
+                    </a>
+                </li>
+                <li class="w-full">
+                    <a href="#" class="inline-flex p-2 w-full group" :class="{'active text-white bg-rose-600 hover:text-stone-200': tab === 'graph', 
+                             'hover:border-stone-300 hover:text-stone-300': tab !== 'graph' }"
+                        @click.prevent="tab = 'graph'">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            class="mr-1 w-5 h-5">
+                            <path fill-rule="evenodd"
+                                d="M4.25 2A2.25 2.25 0 002 4.25v11.5A2.25 2.25 0 004.25 18h11.5A2.25 2.25 0 0018 15.75V4.25A2.25 2.25 0 0015.75 2H4.25zM15 5.75a.75.75 0 00-1.5 0v8.5a.75.75 0 001.5 0v-8.5zm-8.5 6a.75.75 0 00-1.5 0v2.5a.75.75 0 001.5 0v-2.5zM8.584 9a.75.75 0 01.75.75v4.5a.75.75 0 01-1.5 0v-4.5a.75.75 0 01.75-.75zm3.58-1.25a.75.75 0 00-1.5 0v6.5a.75.75 0 001.5 0v-6.5z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        Graph
+                    </a>
+                </li>
+            </ul>
+            <div>
+                <div class="bg-white rounded-b-xl border-x bg-border-stone-200 p-10 overflow-x-auto" id="output"
+                    :class="{'block': tab === 'graph', 'hidden': tab !== 'graph'}">
+                </div>
+                <div class="bg-white rounded-b-xl border-x bg-border-stone-200 p-10 overflow-x-auto"
+                    :class="{'block': tab === 'initial-df', 'hidden': tab !== 'initial-df'}" id="initial-df-output">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center my-6" id="footer">
+        <div class="text-blue-600">
+            <a href="#" class="hover:text-blue-500" id="about">About</a>
+            |
+            <a href="https://twitter.com/_dylancastillo" class="hover:text-blue-500">Get in touch</a>
+            |
+            <a href="https://github.com/dylanjcastillo/pandas-cheatsheet/issues" class="hover:text-blue-500">Send
+                Feedback</a>
+        </div>
+    </div>
+    <div class="hidden overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center"
+        id="modal-id">
+        <div class="relative w-auto my-6 mx-auto max-w-2xl overflow-hidden">
+            <div class="border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
+                <!--header-->
+                <div
+                    class="flex items-start justify-between p-4 bg-gray-50 rounded-t-xl border border-gray-200 font-bold text-xs">
+                    <h3 class="text-sm font-semibold">
+                        About
+                    </h3>
+                    <button
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                        id="close-modal">
+                        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!--body-->
+                <div class="relative p-6 flex-auto overflow-y-auto max-h-[500px] mb-4">
+                    <p class="pb-2 text-2xl leading-relaxed text-bgray-800">Why do we need another Pandas cheat sheet?
+                    </p>
+                    <p class="text-base leading-relaxed text-gray-500">
+                        The answer is simple: most cheat sheets are terrible!
+                        <br><br>
+                        They're just PDFs with a bunch of code that's difficult to copy and modify as needed.
+                        <br><br>
+                        I thought I could make something more useful for the community: an interactive pandas cheat
+                        sheet where you could find and try the code snippets you needed right away. Instead of
+                        attempting to decipher how a piece of code works, you can simply test it in the browser.
+                        <br><br>
+                        As a data professional, you'll undoubtedly come across pandas at some point — and learning how
+                        to use this library is critical for your career. But with so much functionality, pandas can be
+                        overwhelming for those just getting started.
+                        <br><br>
+                        This is why I've created this interactive pandas cheat sheet, covering everything from
+                        generating subsets of rows and columns to reshaping data, dealing with duplicates and missing
+                        data, aggregating data, joining data frames, and more. With code snippets that you can try
+                        yourself in the browser, this cheat sheet is the perfect way to simplify the complexity of
+                        pandas and quickly get up to speed.
+                        <br><br>
+                        So whether you're just starting out in data science or are looking for a refresher, this pandas
+                        cheat sheet will be an invaluable resource. Be sure to bookmark it for future reference!
+                        <br><br>
+                        Please reach out if you have <a href="https://twitter.com/_dylancastillo"
+                            class="text-blue-600 hover:text-blue-500">questions</a> or <a
+                            href="https://github.com/dylanjcastillo/pandas-cheatsheet/issues"
+                            class="text-blue-600 hover:text-blue-500">feedback</a>.
+                        <br><br>
+                        Happy coding!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-id-backdrop"></div>
+
+    <script src="./assets/built/index.js" defer></script>
+    <script src="https://smile-thirtyeight.dylancastillo.co/script.js" data-site="HGJEYEEY" defer></script>
+    <script type="text/javascript">
+        function toggleModal(modalID) {}
+    </script>
+</body>
+
+</html>
