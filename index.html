@@ -31,55 +31,82 @@
     <link rel="icon" type="image/x-icon" href="./assets/images/favicon.ico">
     <link rel="stylesheet" href="./assets/built/style.css" />
     <link rel="stylesheet" href="./assets/built/pyscript.css" />
+    <script defer src="./assets/built/plotly-2.14.0.min.js"></script>
     <script defer src="./assets/built/pyscript.js"></script>
 
     <py-env>
         - matplotlib
         - numpy
         - pandas
+        - seaborn
+        - plotly
     </py-env>
 </head>
 
 <body body class="min-h-screen bg-rose-50">
     <h2 class="text-bgray-800 text-center font-bold text-6xl pt-6">👨‍🍳 📙 📊</h2>
     <h1 class="text-bgray-800 text-center font-bold text-4xl pb-6 pt-2">Python Data Viz Cookbook</h1>
-    <!-- <div class="flex flex-row flex-wrap gap-4 justify-center">
-        <div>
+    <div class="flex flex-row flex-wrap gap-4 justify-center py-5">
+        <div class="order-2 md:order-1">
             <select id="category"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                <option selected="">Choose a category</option>
-                <option value="subset_rows">Subset rows</option>
-                <option value="subset_cols">Subset columns</option>
-                <option value="subset_rows_cols">Subset rows & columns</option>
-                <option value="reshape">Reshape data</option>
-                <option value="manipulate">Manipulate data</option>
-                <option value="summarize">Summarize data</option>
-                <option value="aggregations">Aggregate data</option>
-                <option value="join_df">Join DataFrames</option>
+                class="bg-stone-50 border border-stone-300 text-stone-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block p-2.5">
+                <option selected="">Choose a graph</option>
+                <option value="Line Plot">Line Plot</option>
             </select>
         </div>
-        <div>
-            <select id="operation"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
-                <option selected="">Choose an operation</option>
-            </select>
+        <div x-data="{selectedLibrary: 'Pandas'}" class="order-1 md:order-2">
+            <div x-data="radioTabs('library', libraries)" class="
+						inline-flex
+						p-1
+						pr-0
+						bg-rose-100
+						rounded-lg
+						overflow-hidden
+					">
+                <template x-for="library in libraries">
+                    <label :for="library.id" class="
+								block
+								px-2
+								py-1
+								rounded-lg
+								cursor-pointer
+								hover:bg-rose-400 hover:text-white
+								mr-1
+							" :class="selectedLibrary === library.value ? 'bg-rose-500 text-white': ''">
+                        <input  type="radio" 
+                                class="hidden" :id="library.id" :value="library.value" :name="name"
+                            x-model="selectedLibrary" />
+                        <div x-text="library.label"></div>
+                    </label>
+                </template>
+            </div>
         </div>
-    </div> -->
+    </div>
+    <script type='text/javascript'>
+        function plot(json_fig) {
+            var figure = JSON.parse(json_fig);
+            var div = document.createElement("div");
+            div.id = "output-" + (document.querySelectorAll('div[id^="output-"]').length + 1).toString();
+            document.getElementById("output").appendChild(div);
+
+            Plotly.newPlot(div.id, figure.data, figure.layout);
+        }
+    </script>
     <py-script src="./scripts/script.py" output="initial-df-output"></py-script>
-    <div class="flex flex-row justify-center gap-6 p-10 flex-wrap">
+    <div class="flex flex-row flex-wrap justify-center gap-6 py-5 px-0 md:px-10">
         <div class="w-[400px] md:w-[600px]" id="container-code">
             <div class="p-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
                 REPL
             </div>
-            <div class="bg-white rounded-b-xl border-x bg-border-gray-200 p-4 overflow-x-auto" id="container-repl">
+            <div class="bg-white rounded-b-xl border border-stone-200 p-4 overflow-x-auto" id="container-repl">
                 <py-repl std-out="output" id="output-repl">df.head()</py-repl>
             </div>
         </div>
         <div class="w-[400px] md:w-[600px] " id="container-results" x-data="{ tab: 'graph' }">
             <div class="p-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
-                Results
+                Output
             </div>
-            <ul class="flex text-sm font-medium text-stone-400 bg-stone-800">
+            <ul class="flex text-sm font-medium text-stone-400 bg-stone-800 border border-stone-200">
                 <li class="w-full">
                     <a href="#" class="inline-flex p-2 w-full group" aria-current="page" :class="{'active text-white bg-rose-600 hover:text-stone-200': tab === 'initial-df', 
                              'hover:border-stone-300 hover:text-stone-300': tab !== 'initial-df' }"
@@ -132,12 +159,12 @@
             <div class="border-0 rounded-lg shadow-lg relative flex flex-col bg-white outline-none focus:outline-none">
                 <!--header-->
                 <div
-                    class="flex items-start justify-between p-4 bg-gray-50 rounded-t-xl border border-gray-200 font-bold text-xs">
+                    class="flex items-start justify-between p-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
                     <h3 class="text-sm font-semibold">
                         About
                     </h3>
                     <button
-                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-stone-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center "
                         id="close-modal">
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -187,6 +214,54 @@
     </div>
     <div class="hidden opacity-25 fixed inset-0 z-40 bg-black" id="modal-id-backdrop"></div>
 
+    <div x-data="{ lightbox: false, imgModalSrc : '', imgModalAlt : '', imgModalDesc : '' }">
+        <div x-show="lightbox"
+            @lightbox.window="lightbox = true; imgModalSrc = $event.detail.imgModalSrc; imgModalDesc = $event.detail.imgModalDesc;">
+            <div x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform scale-90"
+                x-transition:enter-end="opacity-100 transform scale-100"
+                x-transition:leave="transition ease-in duration-300"
+                x-transition:leave-start="opacity-100 transform scale-100"
+                x-transition:leave-end="opacity-0 transform scale-90"
+                class="fixed inset-0 z-50 flex items-center justify-center w-full p-2 overflow-hidden bg-black bg-opacity-75 h-100">
+                <div @click.away="lightbox = ''" class="">
+                    <img class="" :src="imgModalSrc" :alt="imgModalAlt">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        const libraries = [{
+                id: "pandas-option",
+                value: "Pandas",
+                label: "Pandas"
+            },
+            {
+                id: "mpl-option",
+                value: "Matplotlib",
+                label: "Matplotlib"
+            },
+            {
+                id: "sns-option",
+                value: "Seaborn",
+                label: "Seaborn"
+            },
+            {
+                id: "px-option",
+                value: "Plotly Express",
+                label: "Plotly Express"
+            },
+        ]
+
+        function radioTabs(name, tabs) {
+            return {
+                name,
+                tabs,
+            }
+        }
+    </script>
     <script src="./assets/built/index.js" defer></script>
     <script src="https://smile-thirtyeight.dylancastillo.co/script.js" data-site="HGJEYEEY" defer></script>
     <script type="text/javascript">

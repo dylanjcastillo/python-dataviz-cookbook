@@ -15,6 +15,7 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "alpinejs": "^3.10.3"
+    "alpinejs": "^3.10.3",
+    "plotly.js-dist-min": "^2.14.0"
   }
 }

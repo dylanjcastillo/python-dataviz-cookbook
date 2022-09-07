@@ -1,18 +1,31 @@
-import Alpine from 'alpinejs'
+import Alpine from 'alpinejs';
 
-window.Alpine = Alpine
+window.Alpine = Alpine;
 
-Alpine.start()
+Alpine.start();
 
 const observer = new MutationObserver((event) => {
     let elements = document.querySelectorAll('div[id^="output-"]');
     [].forEach.call(elements, function (element) {
         if (parseInt(element.id.split("-")[1]) != elements.length) {
             element.classList.add("hidden");
+        } else {
+            console.log(element);
+            if (element.getElementsByTagName('img').length > 0) {
+                var img = element.getElementsByTagName('img')[0]
+                img.setAttribute("x-bind", "imgModal");
+
+                Alpine.bind("imgModal", () => ({
+                    type: 'button',
+                    '@click'() {
+                        this.$dispatch('lightbox', {
+                            imgModalSrc: img.getAttribute("src"),
+                        })
+                    },
+                }));
+            }
         }
     });
-
-    document.querySelector("#initial-repl button").click();
 });
 
 const output = document.getElementById('output');
