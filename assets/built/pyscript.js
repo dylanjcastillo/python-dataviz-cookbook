@@ -574,8 +574,8 @@ var app = (function () {
                     }
                     const out = Element(this.outputElement.id);
                     out.write.callKwargs(output, { append: true });
-                    this.outputElement.hidden = false;
-                    this.outputElement.style.display = 'block';
+                    // this.outputElement.hidden = false;
+                    // this.outputElement.style.display = 'block';
                 }
                 // check if this REPL contains errors, delete them and remove error classes
                 const errorElements = document.querySelectorAll(`div[id^='${this.errorElement.id}'][error]`);
@@ -599,8 +599,8 @@ var app = (function () {
                 addClasses(this.errorElement, ['bg-red-200', 'p-2']);
                 out.write.callKwargs(err, { append: true });
                 this.errorElement.children[this.errorElement.children.length - 1].setAttribute('error', '');
-                this.errorElement.hidden = false;
-                this.errorElement.style.display = 'block';
+                // this.errorElement.hidden = false;
+                // this.errorElement.style.display = 'block';
             }
         } // end evaluate
         async eval(source) {
@@ -24030,8 +24030,8 @@ var app = (function () {
             this.outputElement.hidden = false;
         }
         postEvaluate() {
-            this.outputElement.hidden = false;
-            this.outputElement.style.display = 'block';
+            // this.outputElement.hidden = false;
+            // this.outputElement.style.display = 'block';
             if (this.hasAttribute('auto-generate')) {
                 const allPyRepls = document.querySelectorAll(`py-repl[root='${this.getAttribute('root')}'][exec-id]`);
                 const lastRepl = allPyRepls[allPyRepls.length - 1];
