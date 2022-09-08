@@ -1,7 +1,14 @@
 import {
     line_chart,
     bar_chart,
-    grouped_bar_chart
+    grouped_bar_chart,
+    stacked_bar_chart,
+    stacked_area_chart,
+    pie_chart,
+    donut_chart,
+    histogram,
+    scatter_plot,
+    box_plot
 } from "./chart_code.js";
 
 
@@ -13,6 +20,20 @@ function get_sample_code(chart_type, library) {
         return bar_chart[library];
     } else if (chart_type === "Grouped Bar Chart") {
         return grouped_bar_chart[library];
+    } else if (chart_type === "Stacked Bar Chart") {
+        return stacked_bar_chart[library];
+    } else if (chart_type === "Stacked Area Chart") {
+        return stacked_area_chart[library];
+    } else if (chart_type === "Pie Chart") {
+        return pie_chart[library];
+    } else if (chart_type === "Donut Chart") {
+        return donut_chart[library];
+    } else if (chart_type === "Histogram") {
+        return histogram[library];
+    } else if (chart_type === "Scatter Plot") {
+        return scatter_plot[library];
+    } else if (chart_type === "Box Plot") {
+        return box_plot[library];
     }
     return "";
 }

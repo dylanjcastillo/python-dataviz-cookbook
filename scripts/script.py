@@ -17,6 +17,14 @@ df = pd.DataFrame({})
 chart_data_mapping = {
     "Line Chart": "line_chart.csv",
     "Bar Chart": "bar_chart.csv",
+    "Grouped Bar Chart": "bar_chart.csv",
+    "Stacked Bar Chart": "stacked_bar_chart.csv",
+    "Stacked Area Chart": "stacked_area_chart.csv",
+    "Pie Chart": "donut_chart.csv",
+    "Donut Chart": "donut_chart.csv",
+    "Histogram": "histogram.csv",
+    "Scatter Plot": "scatter_plot.csv",
+    "Box Plot": "box_plot.csv",
 }
 
 chart_type = document.querySelector("#chart-type")

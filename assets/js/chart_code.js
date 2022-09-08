@@ -66,7 +66,8 @@ fig = px.line(
     color="Name", 
     title="Stock Prices (2015 - 2017)"
 )
-plot(fig) # Ignore this
+fig.update_yaxes(tickprefix="$")
+plot(fig) # Ignore this line
 `
 }
 
@@ -82,12 +83,12 @@ df.plot.bar(
     rot=0,
     ylabel="Opening price",
     title="Maximum opening price per year - AAPL",
+    legend=None,
     ax=ax
 )
 ax.yaxis.set_major_formatter(
     mticker.StrMethodFormatter("$\{x:1.0f\}")
 )
-ax.get_legend().remove()
 fig
      `,
     "Matplotlib": `
@@ -141,7 +142,7 @@ fig
     labels={"value": "Opening price"},
 )
 fig.update_yaxes(tickprefix="$")
-plot(fig)
+plot(fig) # Ignore this line
 `
 }
 
@@ -198,7 +199,7 @@ df_long = df.melt(
     value_name="Price",
 ) # Seaborn works better with long data
 
-fig, ax = plt.subplots(figsize=(12, 6))
+fig, ax = plt.subplots(figsize=(6, 4))
 sns.barplot(data=df_long, x="Year", y="Price", hue="Category", ax=ax)
 
 ax.yaxis.set_major_formatter(
@@ -219,20 +220,413 @@ fig = px.bar(
     labels={"value": "Price"},
 )
 fig.update_yaxes(tickprefix="$")
-plot(fig)
+plot(fig) # Ignore this line
 `
 }
 
 const stacked_bar_chart = {
-    "Pandas": ``,
-    "Matplotlib": ``,
-    "Seaborn": ``,
-    "Plotly Express": ``
+    "Pandas": `
+fig, ax = plt.subplots(figsize=(6, 4))
+df_wide = df.pivot(
+    index="Year", columns="Name", values="Volume"
+) # Pandas works better with wide data
+df_wide.plot.bar(
+    ylabel="Volume (billions of shares)",
+    title="Trading volume per year for selected shares",
+    stacked=True,
+    ax=ax,
+    rot=0
+)
+fig
+`,
+    "Matplotlib": `
+fig, ax = plt.subplots(figsize=(6, 4))
+
+bottom = np.zeros(df.Year.nunique())
+for i, g in df.groupby("Name"):
+    ax.bar(
+        g["Year"], 
+        g["Volume"], 
+        bottom=bottom, 
+        label=i, 
+        width=0.5
+    )
+    bottom += g["Volume"].values
+
+ax.set_title("Trading volume per year for selected shares")
+ax.set_ylabel("Volume (billions of shares)")
+ax.set_xlabel("Year")
+
+ax.legend()
+
+fig
+`,
+    "Seaborn": `
+fig, ax = plt.subplots(figsize=(6, 4))
+
+ax = sns.histplot(
+    data=df,
+    x="Year",
+    hue="Name",
+    weights="Volume",
+    multiple="stack",
+    shrink=0.5,
+    discrete=True,
+    hue_order=df.groupby("Name").Volume.sum().sort_values().index,
+)
+
+ax.set_title("Trading volume per year for selected shares")
+ax.set_ylabel("Volume (billions of shares)")
+
+legend = ax.get_legend()
+legend.set_bbox_to_anchor((1, 1))
+fig
+`,
+    "Plotly Express": `
+fig = px.bar(
+    df,
+    x="Year",
+    y="Volume",
+    color="Name",
+    title="Trading volume per year for selected shares",
+    barmode="stack",
+    labels={"Volume": "Volume (billions of shares)"},
+)
+plot(fig) # Ignore this line
+`
 }
 
+const stacked_area_chart = {
+    "Pandas": `
+import matplotlib.dates as mdates
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+df_wide = df.pivot(
+    index="Date", columns="Name", values="Volume Perc"
+) # Pandas works better with wide data
+
+df_wide.plot.area(
+    rot=0,
+    title="Distribution of daily trading volume - 2017",
+    stacked=True,
+    ax=ax
+)
+
+ax.tick_params(axis="x", rotation=30)
+ax.legend(bbox_to_anchor=(1, 1), loc="upper left")
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b-%y"))
+
+fig
+`,
+    "Matplotlib": `
+df_wide = df.pivot(
+    index="Date", columns="Name", values="Volume Perc"
+)
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+ax.stackplot(
+    df_wide.index, 
+    [df_wide[col].values for col in sorted(df.Name.unique())], 
+    labels=sorted(df.Name.unique())
+)
+ax.legend(bbox_to_anchor=(1, 1), loc="upper left")
+
+ax.set_title("Distribution of daily trading volume - 2017")
+
+ax.tick_params(axis="x", rotation=30)
+ax.legend(bbox_to_anchor=(1, 1), loc="upper left")
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+ax.xaxis.set_major_formatter(mdates.DateFormatter("%b-%y"))
+
+fig
+`,
+    "Seaborn": ``,
+    "Plotly Express": `
+    # Plotly express
+fig = px.area(
+    df,
+    x="Date",
+    y="Volume Perc",
+    color="Name",
+    title="Distribution of daily trading volume - 2017",
+)
+fig.update_layout(yaxis_tickformat=".0%")
+plot(fig) # Ignore this line
+`
+}
+
+const donut_chart = {
+    "Pandas": `
+fig, ax = plt.subplots(figsize=(6, 6))
+df.set_index("Name").plot.pie(
+    y="Volume",
+    wedgeprops=dict(width=0.5),
+    autopct="%1.0f%%",
+    pctdistance=0.75,
+    title="Distribution of total trading volume for selected stocks (2006 - 2017)",
+    ax=ax
+)
+fig
+`,
+    "Matplotlib": `
+fig, ax = plt.subplots(figsize=(6, 6))
+
+ax.pie(
+    df.Volume,
+    labels=df.Name,
+    wedgeprops=dict(width=0.5),
+    autopct="%1.0f%%",
+    pctdistance=0.75,
+)
+ax.set_title("Distribution of total trading volume for selected stocks (2006 - 2017)")
+ax.legend()
+fig`,
+    "Seaborn": ``,
+    "Plotly Express": `
+fig = px.pie(
+    data_frame=df,
+    values="Volume",
+    names="Name",
+    hole=0.5,
+    color="Name",
+    title="Distribution of trading volume for selected stocks (2006 - 2017)",
+)
+plot(fig) # Ignore this line
+`
+}
+
+const pie_chart = {
+    "Pandas": `
+fig, ax = plt.subplots(figsize=(6, 6))
+df.set_index("Name").plot.pie(
+    y="Volume",
+    autopct="%1.0f%%",
+    pctdistance=0.75,
+    title="Distribution of total trading volume for selected stocks (2006 - 2017)",
+    ax=ax
+)
+fig    
+    `,
+    "Matplotlib": `
+fig, ax = plt.subplots(figsize=(6, 6))
+
+ax.pie(
+    df.Volume,
+    labels=df.Name,
+    autopct="%1.0f%%",
+    pctdistance=0.75,
+)
+ax.set_title("Distribution of total trading volume for selected stocks (2006 - 2017)")
+ax.legend()
+fig`,
+    "Seaborn": ``,
+    "Plotly Express": `
+fig = px.pie(
+    data_frame=df,
+    values="Volume",
+    names="Name",
+    color="Name",
+    title="Distribution of trading volume for selected stocks (2006 - 2017)",
+)
+plot(fig) # Ignore this line
+`
+}
+
+const histogram = {
+    "Pandas": `
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+df.plot.hist(
+    y="Close",
+    legend=None,
+    ax=ax,
+    title="Distribution of Closing Prices - GOOGL",
+    xlabel="Closing Price"
+)
+ax.xaxis.set_major_formatter(
+    mticker.StrMethodFormatter("$\{x:1.0f\}")
+)
+
+fig`,
+    "Matplotlib": `
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+ax.hist(df.Close, alpha=0.75, bins=30)
+
+ax.set_title("Distribution of Closing Prices - GOOGL")
+ax.set_xlabel("Closing Price")
+ax.xaxis.set_major_formatter(
+    mticker.StrMethodFormatter("$\{x:1.0f\}")
+)
+
+fig`,
+    "Seaborn": `
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+sns.histplot(data=df, x="Close", hue="Name", ax=ax)
+
+ax.set_title("Distribution of Closing Prices - GOOGL")
+ax.set_xlabel("Closing Price")
+ax.xaxis.set_major_formatter(
+    mticker.StrMethodFormatter("$\{x:1.0f\}")
+)
+
+fig`,
+    "Plotly Express": `
+fig = px.histogram(
+    df,
+    x="Close",
+    labels={"Close": "Closing Price"},
+    title="Distribution of Closing Prices - GOOGL",
+    nbins=30
+)
+plot(fig) # Ignore this line
+`
+}
+
+const scatter_plot = {
+    "Pandas": `
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 6))
+df_wide = df.pivot(index="Date", columns="Name", values="Return")
+
+ax = df_wide.plot.scatter(
+    x="GOOGL", 
+    y="AMZN", 
+    title="Daily returns - GOOGL vs. AMZN", 
+    ax=ax
+)
+
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+ax.xaxis.set_major_formatter(mticker.PercentFormatter(1))
+fig`,
+    "Matplotlib": `
+import matplotlib.ticker as mticker
+
+df_wide = df.pivot(
+    index="Date", columns="Name", values="Return"
+)
+
+fig, ax = plt.subplots(figsize=(6, 6))
+
+ax.scatter(x=df_wide["GOOGL"], y=df_wide["AMZN"])
+
+ax.set_xlabel("GOOGL")
+ax.set_ylabel("AMZN")
+ax.set_title("Daily returns - GOOGL vs. AMZN")
+
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+ax.xaxis.set_major_formatter(mticker.PercentFormatter(1))
+fig`,
+    "Seaborn": `
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 6))
+
+df_wide = df.pivot(index="Date", columns="Name", values="Return")
+
+sns.scatterplot(data=df_wide, x="GOOGL", y="AMZN", ax=ax)
+
+ax.set_title("Daily returns - GOOGL vs AMZN")
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+ax.xaxis.set_major_formatter(mticker.PercentFormatter(1))
+fig`,
+    "Plotly Express": `
+fig = px.scatter(
+    data_frame=df_wide, 
+    x="GOOGL", 
+    y="AMZN", 
+    title="Daily returns - GOOGL vs. AMZN"
+)
+fig.update_layout(yaxis_tickformat=".0%", xaxis_tickformat=".0%")
+plot(fig) # Ignore this line
+`
+}
+
+const box_plot = {
+    "Pandas": `
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+df_wide = df.pivot(
+    index="Date", columns="Name", values="Return"
+)
+df_wide.boxplot(
+    column=["AMZN", "GOOGL", "IBM", "JPM"],
+    ax=ax
+)
+
+ax.set_ylabel("Daily returns")
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+fig
+`,
+    "Matplotlib": `
+import matplotlib.ticker as mticker
+
+df_wide = df.pivot(index="Date", columns="Name", values="Return")
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+ax.boxplot(
+    [df_wide[col] for col in sorted(df.Name.unique())], 
+    vert=True, 
+    autorange=True, 
+    labels=sorted(df.Name.unique())
+)
+
+ax.set_ylabel("Daily returns")
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+fig
+`,
+    "Seaborn": `
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+sns.boxplot(
+    data=df,
+    x="Name", 
+    y="Return", 
+    order=sorted(df.Name.unique()),
+    ax=ax
+)
+
+ax.set_ylabel("Daily returns")
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+fig
+`,
+    "Plotly Express": `
+fig = px.box(
+    df, 
+    x="Name", 
+    y="Return", 
+    category_orders={"Name": sorted(df.Name.unique())}
+)
+fig.update_layout(yaxis_tickformat=".0%")
+plot(fig)
+`
+}
 module.exports = {
     line_chart,
     bar_chart,
     grouped_bar_chart,
     stacked_bar_chart,
+    stacked_area_chart,
+    donut_chart,
+    pie_chart,
+    histogram,
+    scatter_plot,
+    box_plot
 }
