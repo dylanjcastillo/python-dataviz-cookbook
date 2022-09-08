@@ -28,6 +28,9 @@ Alpine.data('radioData', () => ({
             label: "Plotly Express"
         },
     ],
+    init() {
+        update_repl_code("Pandas");
+    },
     update_repl() {
         if (this.$el.id === "chart-type") {
             update_repl_code(this.selectedLibrary);

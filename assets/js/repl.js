@@ -1,11 +1,18 @@
 import {
-    line_chart
-} from "./line_chart.js";
+    line_chart,
+    bar_chart,
+    grouped_bar_chart
+} from "./chart_code.js";
+
 
 function get_sample_code(chart_type, library) {
 
     if (chart_type === "Line Chart") {
         return line_chart[library];
+    } else if (chart_type === "Bar Chart") {
+        return bar_chart[library];
+    } else if (chart_type === "Grouped Bar Chart") {
+        return grouped_bar_chart[library];
     }
     return "";
 }
@@ -33,4 +40,3 @@ export function update_repl_code(selected_library) {
         }
     }
 }
-

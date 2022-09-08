@@ -50,13 +50,13 @@
         <div class="order-2 md:order-1">
             <select id="chart-type" x-on:change="update_repl"
                 class="bg-stone-50 border border-stone-300 text-stone-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block p-2.5">
-                <option selected="">Choose a graph</option>
+                <option value="">Choose a graph</option>
                 <option value="Bar Chart">Bar Chart</option>
                 <option value="Box Plot">Box Plot</option>
                 <option value="Donut Chart">Donut Chart</option>
                 <option value="Grouped Bar Chart">Grouped Bar Chart</option>
                 <option value="Histogram">Histogram</option>
-                <option value="Line Chart">Line Chart</option>
+                <option selected value="Line Chart">Line Chart</option>
                 <option value="Pie Chart">Pie Chart</option>
                 <option value="Scatter Plot">Scatter Plot</option>
                 <option value="Stacked Area Chart">Stacked Area Chart</option>
@@ -91,7 +91,7 @@
         </div>
     </div>
     <script type='text/javascript'>
-        function plot(json_fig) {
+        function plot_js(json_fig) {
             var figure = JSON.parse(json_fig);
             var div = document.createElement("div");
             div.id = "output-" + (document.querySelectorAll('div[id^="output-"]').length + 1).toString();
