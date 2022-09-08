@@ -315,13 +315,15 @@ df_wide.plot.area(
 )
 
 ax.tick_params(axis="x", rotation=30)
-ax.legend(bbox_to_anchor=(1, 1), loc="upper left")
 ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%b-%y"))
 
 fig
 `,
     "Matplotlib": `
+import matplotlib.dates as mdates
+import matplotlib.ticker as mticker
+
 df_wide = df.pivot(
     index="Date", columns="Name", values="Volume Perc"
 )
@@ -333,12 +335,10 @@ ax.stackplot(
     [df_wide[col].values for col in sorted(df.Name.unique())], 
     labels=sorted(df.Name.unique())
 )
-ax.legend(bbox_to_anchor=(1, 1), loc="upper left")
 
 ax.set_title("Distribution of daily trading volume - 2017")
 
 ax.tick_params(axis="x", rotation=30)
-ax.legend(bbox_to_anchor=(1, 1), loc="upper left")
 ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%b-%y"))
 
