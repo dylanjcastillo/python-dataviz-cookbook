@@ -43,19 +43,28 @@
     </py-env>
 </head>
 
-<body body class="min-h-screen bg-rose-50">
+<body body class="min-h-screen bg-rose-50" x-data="radioData()">
     <h2 class="text-bgray-800 text-center font-bold text-6xl pt-6">👨‍🍳 📙 📊</h2>
     <h1 class="text-bgray-800 text-center font-bold text-4xl pb-6 pt-2">Python Data Viz Cookbook</h1>
     <div class="flex flex-row flex-wrap gap-4 justify-center py-5">
         <div class="order-2 md:order-1">
-            <select id="category"
+            <select id="chart-type" x-on:change="update_repl"
                 class="bg-stone-50 border border-stone-300 text-stone-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block p-2.5">
                 <option selected="">Choose a graph</option>
-                <option value="Line Plot">Line Plot</option>
+                <option value="Bar Chart">Bar Chart</option>
+                <option value="Box Plot">Box Plot</option>
+                <option value="Donut Chart">Donut Chart</option>
+                <option value="Grouped Bar Chart">Grouped Bar Chart</option>
+                <option value="Histogram">Histogram</option>
+                <option value="Line Chart">Line Chart</option>
+                <option value="Pie Chart">Pie Chart</option>
+                <option value="Scatter Plot">Scatter Plot</option>
+                <option value="Stacked Area Chart">Stacked Area Chart</option>
+                <option value="Stacked Bar Chart">Stacked Bar Chart</option>
             </select>
         </div>
-        <div x-data="{selectedLibrary: 'Pandas'}" class="order-1 md:order-2">
-            <div x-data="radioTabs('library', libraries)" class="
+        <div class="order-1 md:order-2">
+            <div class="
 						inline-flex
 						p-1
 						pr-0
@@ -73,9 +82,8 @@
 								hover:bg-rose-400 hover:text-white
 								mr-1
 							" :class="selectedLibrary === library.value ? 'bg-rose-500 text-white': ''">
-                        <input  type="radio" 
-                                class="hidden" :id="library.id" :value="library.value" :name="name"
-                            x-model="selectedLibrary" />
+                        <input type="radio" class="hidden" :id="library.id" :value="library.value" :name="name"
+                            x-model="selectedLibrary" @click="update_repl" />
                         <div x-text="library.label"></div>
                     </label>
                 </template>
@@ -89,7 +97,20 @@
             div.id = "output-" + (document.querySelectorAll('div[id^="output-"]').length + 1).toString();
             document.getElementById("output").appendChild(div);
 
-            Plotly.newPlot(div.id, figure.data, figure.layout);
+            Plotly.newPlot(div.id, figure.data, figure.layout, {
+                displayModeBar: false,
+            });
+        }
+
+        function update_initial_df(df_html) {
+            var div = document.createElement("div");
+            var initial_div = document.getElementById("initial-df-output");
+            div.id = "initial-df-table"
+            div.innerHTML = df_html;
+            initial_div.innerHTML = "";
+            initial_div.appendChild(div);
+        } {
+            modeBarButtonsToRemove: ['toImage']
         }
     </script>
     <py-script src="./scripts/script.py" output="initial-df-output"></py-script>
@@ -230,43 +251,8 @@
             </div>
         </div>
     </div>
-
-
-    <script>
-        const libraries = [{
-                id: "pandas-option",
-                value: "Pandas",
-                label: "Pandas"
-            },
-            {
-                id: "mpl-option",
-                value: "Matplotlib",
-                label: "Matplotlib"
-            },
-            {
-                id: "sns-option",
-                value: "Seaborn",
-                label: "Seaborn"
-            },
-            {
-                id: "px-option",
-                value: "Plotly Express",
-                label: "Plotly Express"
-            },
-        ]
-
-        function radioTabs(name, tabs) {
-            return {
-                name,
-                tabs,
-            }
-        }
-    </script>
-    <script src="./assets/built/index.js" defer></script>
+    <script src="./assets/built/index.js"></script>
     <script src="https://smile-thirtyeight.dylancastillo.co/script.js" data-site="HGJEYEEY" defer></script>
-    <script type="text/javascript">
-        function toggleModal(modalID) {}
-    </script>
 </body>
 
 </html>
