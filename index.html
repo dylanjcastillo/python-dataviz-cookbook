@@ -114,17 +114,26 @@
         }
     </script>
     <py-script src="./scripts/script.py" output="initial-df-output"></py-script>
+    <div id="copy-code-prefix" hidden></div>
     <div class="flex flex-row flex-wrap justify-center gap-6 py-5 px-0 md:px-10">
         <div class="w-[400px] md:w-[600px]" id="container-code">
-            <div class="p-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
-                REPL
+            <div
+                class="flex flex-row align-middle justify-between p-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
+                <div class="py-1 px-2">
+                    REPL
+                </div>
+                <!-- copy to clibpard button -->
+                <div class="float-right">
+                    <button class="bg-rose-500 hover:bg-rose-400 text-white font-bold py-1 px-2 rounded-lg"
+                        @click="copy_to_clipboard">Copy to clipboard</button>
+                </div>
             </div>
             <div class="bg-white rounded-b-xl border border-stone-200 p-4 overflow-x-auto" id="container-repl">
                 <py-repl std-out="output" id="output-repl">df.head()</py-repl>
             </div>
         </div>
         <div class="w-[400px] md:w-[600px] " id="container-results" x-data="{ tab: 'graph' }">
-            <div class="p-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
+            <div class="py-5 px-4 bg-stone-50 rounded-t-xl border border-stone-200 font-bold text-sm">
                 Output
             </div>
             <ul class="flex text-sm font-medium text-stone-400 bg-stone-800 border border-stone-200">

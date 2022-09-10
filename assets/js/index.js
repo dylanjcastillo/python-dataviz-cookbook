@@ -37,6 +37,25 @@ Alpine.data('radioData', () => ({
         } else {
             update_repl_code(this.$el.getAttribute('value'));
         }
+    },
+    copy_to_clipboard() {
+        const repl_lines = document.querySelectorAll("#output-repl .cm-line");
+        const prefix = document.getElementById("copy-code-prefix");
+
+        let text_to_copy = prefix.textContent;
+
+        repl_lines.forEach((line) => {
+            text_to_copy += "\n" + line.textContent;
+        });
+
+        this.$el.textContent = "Copied!";
+        this.$el.classList.add("bg-rose-400");
+        setTimeout(() => {
+            this.$el.textContent = "Copy to clipboard";
+            this.$el.classList.remove("bg-rose-400");
+        }, 2000);
+
+        navigator.clipboard.writeText(text_to_copy);
     }
 }));
 

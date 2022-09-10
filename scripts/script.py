@@ -49,6 +49,20 @@ def read_data(change):
     except Exception:
         pass
 
+    document.querySelector(
+        "#copy-code-prefix"
+    ).innerHTML = f"""import pandas as pd
+import plotly.express as px
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
+
+df = pd.read_csv("https://raw.githubusercontent.com/dylanjcastillo/python-dataviz-cookbook/main/data/{chart_data_mapping[chart_type.value]}") 
+
+if "Date" in df.columns:
+    df["Date"] = pd.to_datetime(df["Date"])
+    """
+
 
 chart_type.addEventListener("change", create_proxy(read_data))
 read_data(None)

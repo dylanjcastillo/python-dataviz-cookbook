@@ -18,7 +18,7 @@ df_wide.plot(
 ax.xaxis.set_major_formatter(
     mdates.DateFormatter("%b-%y")
 )
-fig
+fig # Not necessary if using a notebook
 `,
     "Matplotlib": `
 import matplotlib.dates as mdates
@@ -38,7 +38,7 @@ ax.set_ylabel("Close")
 ax.set_xlabel("Date")
 ax.legend(title="Name")
 
-fig
+fig # Not necessary if using a notebook
 `,
     "Seaborn": `
 import matplotlib.dates as mdates
@@ -56,7 +56,7 @@ ax.xaxis.set_major_formatter(
 )
 ax.tick_params(axis='x', rotation=30)
 ax.set_title("Stock Prices (2015 - 2017)")
-fig
+fig # Not necessary if using a notebook
 `,
     "Plotly Express": `
 fig = px.line(
@@ -67,7 +67,7 @@ fig = px.line(
     title="Stock Prices (2015 - 2017)"
 )
 fig.update_yaxes(tickprefix="$")
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -89,7 +89,7 @@ df.plot.bar(
 ax.yaxis.set_major_formatter(
     mticker.StrMethodFormatter("$\{x:1.0f\}")
 )
-fig
+fig # Not necessary if using a notebook
      `,
     "Matplotlib": `
 import matplotlib.ticker as mticker
@@ -111,7 +111,7 @@ ax.set_xticklabels(df.Year)
 ax.yaxis.set_major_formatter(
     mticker.StrMethodFormatter("$\{x:1.0f\}")
 )
-fig
+fig # Not necessary if using a notebook
 `,
     "Seaborn": `
 import matplotlib.ticker as mticker
@@ -131,7 +131,7 @@ ax.yaxis.set_major_formatter(
 )
 
 ax.set_title("Maximum opening price per year - AAPL")
-fig
+fig # Not necessary if using a notebook
  `,
     "Plotly Express": `
  fig = px.bar(
@@ -142,7 +142,7 @@ fig
     labels={"value": "Opening price"},
 )
 fig.update_yaxes(tickprefix="$")
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -163,7 +163,7 @@ df.plot.bar(
 ax.yaxis.set_major_formatter(
     mticker.StrMethodFormatter("$\{x:1.0f\}")
 )
-fig
+fig # Not necessary if using a notebook
      `,
     "Matplotlib": `
 import matplotlib.ticker as mticker
@@ -187,7 +187,7 @@ ax.yaxis.set_major_formatter(
     mticker.StrMethodFormatter("$\{x:1.0f\}")
 )
 ax.legend()
-fig
+fig # Not necessary if using a notebook
 `,
     "Seaborn": `
 import matplotlib.ticker as mticker
@@ -208,7 +208,7 @@ ax.yaxis.set_major_formatter(
 
 ax.set_title("Maximum opening and closing price per year - AAPL")
 ax.legend(title=None)
-fig
+fig # Not necessary if using a notebook
  `,
     "Plotly Express": `
 fig = px.bar(
@@ -220,7 +220,7 @@ fig = px.bar(
     labels={"value": "Price"},
 )
 fig.update_yaxes(tickprefix="$")
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -237,7 +237,7 @@ df_wide.plot.bar(
     ax=ax,
     rot=0
 )
-fig
+fig # Not necessary if using a notebook
 `,
     "Matplotlib": `
 fig, ax = plt.subplots(figsize=(6, 4))
@@ -259,7 +259,7 @@ ax.set_xlabel("Year")
 
 ax.legend()
 
-fig
+fig # Not necessary if using a notebook
 `,
     "Seaborn": `
 fig, ax = plt.subplots(figsize=(6, 4))
@@ -280,7 +280,7 @@ ax.set_ylabel("Volume (billions of shares)")
 
 legend = ax.get_legend()
 legend.set_bbox_to_anchor((1, 1))
-fig
+fig # Not necessary if using a notebook
 `,
     "Plotly Express": `
 fig = px.bar(
@@ -292,7 +292,7 @@ fig = px.bar(
     barmode="stack",
     labels={"Volume": "Volume (billions of shares)"},
 )
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -318,7 +318,7 @@ ax.tick_params(axis="x", rotation=30)
 ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%b-%y"))
 
-fig
+fig # Not necessary if using a notebook
 `,
     "Matplotlib": `
 import matplotlib.dates as mdates
@@ -342,7 +342,7 @@ ax.tick_params(axis="x", rotation=30)
 ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
 ax.xaxis.set_major_formatter(mdates.DateFormatter("%b-%y"))
 
-fig
+fig # Not necessary if using a notebook
 `,
     "Seaborn": ``,
     "Plotly Express": `
@@ -355,7 +355,7 @@ fig = px.area(
     title="Distribution of daily trading volume - 2017",
 )
 fig.update_layout(yaxis_tickformat=".0%")
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -370,7 +370,7 @@ df.set_index("Name").plot.pie(
     title="Distribution of total trading volume for selected stocks (2006 - 2017)",
     ax=ax
 )
-fig
+fig # Not necessary if using a notebook
 `,
     "Matplotlib": `
 fig, ax = plt.subplots(figsize=(6, 6))
@@ -395,7 +395,7 @@ fig = px.pie(
     color="Name",
     title="Distribution of trading volume for selected stocks (2006 - 2017)",
 )
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -432,7 +432,7 @@ fig = px.pie(
     color="Name",
     title="Distribution of trading volume for selected stocks (2006 - 2017)",
 )
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -490,7 +490,7 @@ fig = px.histogram(
     title="Distribution of Closing Prices - GOOGL",
     nbins=30
 )
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -550,7 +550,7 @@ fig = px.scatter(
     title="Daily returns - GOOGL vs. AMZN"
 )
 fig.update_layout(yaxis_tickformat=".0%", xaxis_tickformat=".0%")
-plot(fig) # Ignore this line
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 
@@ -570,7 +570,7 @@ df_wide.boxplot(
 
 ax.set_ylabel("Daily returns")
 ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
-fig
+fig # Not necessary if using a notebook
 `,
     "Matplotlib": `
 import matplotlib.ticker as mticker
@@ -588,7 +588,7 @@ ax.boxplot(
 
 ax.set_ylabel("Daily returns")
 ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
-fig
+fig # Not necessary if using a notebook
 `,
     "Seaborn": `
 import matplotlib.ticker as mticker
@@ -605,7 +605,7 @@ sns.boxplot(
 
 ax.set_ylabel("Daily returns")
 ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
-fig
+fig # Not necessary if using a notebook
 `,
     "Plotly Express": `
 fig = px.box(
