@@ -94,6 +94,11 @@ observer.observe(output, {
 document.addEventListener('DOMContentLoaded', function () {
     var about_button = document.getElementById('about');
     var close_modal_button = document.getElementById('close-modal');
+    var btn_run = document.getElementById('btnRun');
+
+    btn_run.classList.remove("opacity-0");
+    btn_run.classList.remove("group-hover:opacity-100");
+    btn_run.classList.add("hover:opacity-75")
 
     about_button.addEventListener('click', function (event) {
         event.preventDefault();
