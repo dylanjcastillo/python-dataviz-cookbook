@@ -344,7 +344,7 @@ ax.xaxis.set_major_formatter(mdates.DateFormatter("%b-%y"))
 
 fig # Not necessary if using a notebook
 `,
-    "Seaborn": ``,
+    "Seaborn": `# Seaborn does not support stacked area charts`,
     "Plotly Express": `
     # Plotly express
 fig = px.area(
@@ -385,7 +385,7 @@ ax.pie(
 ax.set_title("Distribution of total trading volume for selected stocks (2006 - 2017)")
 ax.legend()
 fig`,
-    "Seaborn": ``,
+    "Seaborn": `# Seaborn does not support donut charts`,
     "Plotly Express": `
 fig = px.pie(
     data_frame=df,
@@ -423,7 +423,7 @@ ax.pie(
 ax.set_title("Distribution of total trading volume for selected stocks (2006 - 2017)")
 ax.legend()
 fig`,
-    "Seaborn": ``,
+    "Seaborn": `# Seaborn does not support pie charts`,
     "Plotly Express": `
 fig = px.pie(
     data_frame=df,
