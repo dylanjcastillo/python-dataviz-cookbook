@@ -618,6 +618,7 @@ fig.update_layout(yaxis_tickformat=".0%")
 plot(fig)
 `
 }
+
 const strip_plot = {
     "Pandas": `# Pandas does not support strip plots`,
     "Matplotlib": `# Matplotlib does not support strip plots`,
