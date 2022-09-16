@@ -8,7 +8,8 @@ import {
     donut_chart,
     histogram,
     scatter_plot,
-    box_plot
+    box_plot,
+    strip_plot
 } from "./chart_code.js";
 
 
@@ -34,6 +35,8 @@ function get_sample_code(chart_type, library) {
         return scatter_plot[library];
     } else if (chart_type === "Box Plot") {
         return box_plot[library];
+    } else if (chart_type === "Strip Plot") {
+        return strip_plot[library];
     }
     return "";
 }
