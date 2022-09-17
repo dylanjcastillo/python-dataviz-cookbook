@@ -618,6 +618,40 @@ fig.update_layout(yaxis_tickformat=".0%")
 plot(fig)
 `
 }
+
+const strip_plot = {
+    "Pandas": `# Pandas does not support strip plots`,
+    "Matplotlib": `# Matplotlib does not support strip plots`,
+    "Seaborn": `
+import matplotlib.ticker as mticker
+
+fig, ax = plt.subplots(figsize=(6, 4))
+
+sns.stripplot(
+    data=df,
+    x="Name", 
+    y="Return", 
+    order=sorted(df.Name.unique()),
+    alpha=0.3,
+    ax=ax
+)
+
+ax.set_ylabel("Daily returns")
+ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+fig # Not necessary if using a notebook
+`,
+    "Plotly Express": `
+fig = px.strip(
+    df, 
+    x="Name", 
+    y="Return", 
+    category_orders={"Name": sorted(df.Name.unique())},
+    color="Name"
+)
+fig.update_layout(yaxis_tickformat=".0%")
+plot(fig) # Replace this line by fig.show() to use in a notebook
+`
+}
 module.exports = {
     line_chart,
     bar_chart,
@@ -628,5 +662,6 @@ module.exports = {
     pie_chart,
     histogram,
     scatter_plot,
-    box_plot
+    box_plot,
+    strip_plot
 }
