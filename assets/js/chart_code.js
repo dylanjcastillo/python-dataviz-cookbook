@@ -649,7 +649,7 @@ fig = px.strip(
     color="Name"
 )
 fig.update_layout(yaxis_tickformat=".0%")
-plot(fig)
+plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
 module.exports = {
