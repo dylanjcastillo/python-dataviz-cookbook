@@ -26,6 +26,7 @@ chart_data_mapping = {
     "Scatter Plot": "scatter_plot.csv",
     "Box Plot": "box_plot.csv",
     "Strip Plot": "box_plot.csv",
+    "Pair Plot": "box_plot.csv"
 }
 
 chart_type = document.querySelector("#chart-type")

@@ -652,6 +652,60 @@ fig.update_layout(yaxis_tickformat=".0%")
 plot(fig) # Replace this line by fig.show() to use in a notebook
 `
 }
+
+const pair_plot = {
+    "Pandas": `
+import matplotlib.ticker as mticker
+
+df_wide = df.pivot(
+    index="Date", columns="Name", values="Return"
+) # Pair plots work with wide data
+
+fig = pd.plotting.scatter_matrix(df_wide,
+                                 hist_kwds={'bins': 20}, 
+                                 alpha=0.4)
+
+for ax in fig.flatten()[1:]:
+    if ax:
+        ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+        ax.xaxis.set_major_formatter(mticker.PercentFormatter(1))
+`,
+    "Matplotlib": `# Matplotlib does not support strip plots`,
+    "Seaborn": `
+import matplotlib.ticker as mticker
+
+df_wide = df.pivot(
+    index="Date", columns="Name", values="Return"
+) # Pair plots work with wide data
+
+fig = sns.pairplot(df_wide, 
+             kind="reg", 
+             corner=True,
+             height=1.5,
+             plot_kws={'line_kws':{'color':'red'}, 'scatter_kws': {'alpha': 0.1}},
+             diag_kws=dict(edgecolor="black", linewidth=0.2))
+
+for ax in fig.axes.flatten():
+    if ax:
+        ax.yaxis.set_major_formatter(mticker.PercentFormatter(1))
+        ax.xaxis.set_major_formatter(mticker.PercentFormatter(1))
+fig
+`,
+    "Plotly Express": `
+df_wide = df.pivot(
+    index="Date", columns="Name", values="Return"
+) # Pair plots work with wide data
+
+fig = px.scatter_matrix(df_wide,
+                        title="Daily Returns",
+                        opacity=0.2)
+
+fig.update_layout({"yaxis"+str(i+1): dict(tickformat=".0%") for i in range(16)})
+fig.update_layout({"xaxis"+str(i+1): dict(tickformat=".0%") for i in range(16)})
+
+plot(fig) # Replace this line by fig.show() to use in a notebook
+`
+}
 module.exports = {
     line_chart,
     bar_chart,
@@ -663,5 +717,6 @@ module.exports = {
     histogram,
     scatter_plot,
     box_plot,
-    strip_plot
+    strip_plot,
+    pair_plot
 }
