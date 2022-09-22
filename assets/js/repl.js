@@ -9,7 +9,8 @@ import {
     histogram,
     scatter_plot,
     box_plot,
-    strip_plot
+    strip_plot,
+    pair_plot
 } from "./chart_code.js";
 
 
@@ -37,6 +38,8 @@ function get_sample_code(chart_type, library) {
         return box_plot[library];
     } else if (chart_type === "Strip Plot") {
         return strip_plot[library];
+    } else if (chart_type === "Pair Plot") {
+        return pair_plot[library];
     }
     return "";
 }
