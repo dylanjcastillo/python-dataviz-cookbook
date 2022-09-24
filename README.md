@@ -15,6 +15,10 @@ Check it out: [Python Data Viz Cookbook](https://dataviz.dylancastillo.co/)
 
 If you have any ideas of new graphs to add, please feel to open an issue or (even better!) a pull request with your proposal.
 
+## Attributions
+
+Original dataset by [ichardddddd](https://github.com/szrlee).
+
 ## License
 
 MIT
